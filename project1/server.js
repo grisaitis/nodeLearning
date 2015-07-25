@@ -1,19 +1,20 @@
 var http = require("http");
 var url = require("url");
-var utils = require("./utils.js")
+var utils = require("./utils.js");
 
-function start() {
+function start(route) {
 	function onRequest(request, response) {
 		console.log("request received");
  		// console.log(objToString(url.parse(request.url)))
 		// console.log(typeof request.url); // prints "string"
 		var pathname = url.parse(request.url).pathname; 
 		console.log(pathname); // prints "/"" or "/favicon.ico"
+		console.log(route(pathname));
 		response.writeHead(200, {"Content-Type": "text/plain"});
 		response.write("hello world!");
 		response.end();
 		// console.log(request.body); // prints "undefined"
-		console.log(utils.objToString(request));
+		// console.log(utils.objToString(request));
 		// console.log(objToString(request.headers));
 		// console.log(request.headers['user-agent']);
 		//console.log("print to console..."); 
@@ -26,4 +27,6 @@ function start() {
 }
 
 exports.start = start; // makes start() available elsewhere
-exports.test = "whoa";
+exports.test = "whoa"; // testing out exports...
+
+// when this module is "required" elsewhere, "exports" defines what's available  
