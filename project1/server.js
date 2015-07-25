@@ -5,7 +5,9 @@ function onRequest(request, response) {
 	response.writeHead(200, {"Content-Type": "text/plain"});
 	response.write("hello world!");
 	response.end();
-//	console.log("print to console..."); // this prints 3 times... why?
+//	console.log("print to console..."); 
+	// this prints 3 times... why?
+	// because chrome issues multiple requests
 }
 
 var server = http.createServer(
