@@ -3,9 +3,21 @@ var url = require("url");
 
 function start(route, handle) {
 	function onRequest(request, response) {
+		var postData = '';
 		var pathname = url.parse(request.url).pathname; 
 		console.log("request received for " + pathname);
-		route(handle, pathname, response);
+		
+		request.setEncoding('utf8'); // same as what our html uses
+		request.addListener('data', function(postDataChunk){
+			postData += postDataChunk;
+			console.log('POST is gettin chunky: ' 
+				+ postDataChunk
+				+ '/// end.'
+			);
+		});
+		request.addListener('end', function(){
+			route(handle, pathname, response, postData);
+		});
 	}
 	var server = http.createServer(onRequest);
 	server.listen(8888);
